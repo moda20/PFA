@@ -1,0 +1,15 @@
+{% extends 'home/home.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <h1>Remplir les information necessaire pour la creation d'une fiche technique</h1>
+                {{ form_start(newTSform, {'attr': {'novalidate': 'novalidate'}}) }}
+                {{ form_widget(newTSform) }}
+                <button type="submit" class="btn btn-primary">Enregistrer</button>
+                {{ form_end(newTSform) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

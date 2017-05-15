@@ -1,0 +1,241 @@
+{% extends 'home/home.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.css">
+    <link rel="stylesheet" href="{{ asset('css/accordian.css') }}">
+{% endblock %}
+
+{% block title %}
+    Nouvelle Annonce
+{% endblock %}
+{%  block javascripts %}
+    {{ parent() }}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.js"></script>
+    <script>
+        jQuery(document).ready(function () {
+            $('.js-datepicker').datepicker({
+                format: 'yyyy-mm-dd',
+                startDate: '-1d'
+            });
+            $('.js-datepickerr').datepicker({
+                format: 'yyyy-mm-dd',
+
+            });
+        });
+    </script>
+{% endblock %}
+
+{% block body %}
+
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-6" style="border :none; border-right: 1px black">
+                <h1>Remplir les information necessaire</h1>
+                {{ form_start(TicketForm, {'attr': {'novalidate': 'novalidate'}}) }}
+                <br>
+                <div class="input-group fh" style="">
+                    <span class="input-group-addon fa fa-car" style="max-height: 34px;"></span>
+                {{ form_row(TicketForm.nom, {
+                }) }}
+                </div>
+                <div class="input-group fh" style="">
+                    <span class="input-group-addon fa fa-car" style="max-height: 34px;"></span>
+                    {{ form_row(TicketForm.voiture.nomVoiture, {
+
+                    }) }}
+                </div>
+                <div class="input-group fh" style="">
+                    <span class="input-group-addon fa fa-shekel" style="max-height: 34px;"></span>
+                        {{ form_row(TicketForm.voiture.modeleVoiture, {
+                        }) }}
+                </div>
+                <div class="input-group fh" style="">
+                    <span class="input-group-addon fa fa-car" style="max-height: 34px;"></span>
+                    {{ form_row(TicketForm.voiture.constructeur, {
+                    }) }}
+                </div>
+                <div class="input-group fh" style="margin-top: 11px;margin-bottom: 11px;">
+                    <label class="btn btn-full btn-primary btn-file" style="border-radius: 0;">Choisir une Photo
+                    {{ form_widget(TicketForm.voiture.photo ,{
+                        'attr' : {"style" : "display:none;"}
+                    }) }}
+                    </label>
+                </div>
+                <div class="input-group fh" style="">
+                    <span class="input-group-addon fa fa-question" style="max-height: 34px;"></span>
+                        {{ form_row(TicketForm.voiture.Disponibilite, {
+                        }) }}
+                </div>
+
+                <div class="input-group fh" style="">
+                    <span class="input-group-addon fa fa-calendar-check-o" style="max-height: 34px;"></span>
+                        {{ form_row(TicketForm.voiture.dateAjout, {
+                        }) }}
+                </div>
+                <div class="input-group fh" style="">
+                    <span class="input-group-addon fa fa-money" style="max-height: 34px;"></span>
+                {{ form_row(TicketForm.prix, {
+                }) }}
+                    <span class="input-group-addon" style="max-height: 34px;">$</span>
+                </div>
+                <div class="input-group fh" style="">
+                    <span class="input-group-addon fa fa-paragraph" style="max-height: 34px;"></span>
+                  {{ form_row(TicketForm.description, {
+                        }) }}
+                </div>
+            </div>
+            <div class="col-xs-6">
+                <h1> Fiche technique</h1>
+{#                {{ form_row(TicketForm.voiture.ficheTech,{
+                }) }}#}
+                <div class="panel-group" id="accordion">
+                    <div class="panel panel-primary" style="border-radius: 0;">
+                        <div class="panel-heading" style="background-image: none; background-color: #3c8dbc; border: 2px red; border-radius: 0;">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" style="border-radius: 0;">
+                                    Veillez remplir ces champs pour une meilleur annonce
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseOne" class="panel-collapse collapse in">
+                            <div class="panel-body">
+                                <div class="fht">
+                                    {{ form_row(TicketForm.voiture.ficheTech.carburant) }}
+                                </div>
+                                <div class="fht">
+                                    {{ form_row(TicketForm.voiture.ficheTech.consommationUrbaine100Km) }}
+                                </div>
+                                <div class="fht">
+                                    {{ form_row(TicketForm.voiture.ficheTech.longueur) }}
+                                </div>
+                                <div class="fht">
+                                    {{ form_row(TicketForm.voiture.ficheTech.maxRevision) }}
+                                </div>
+                                <div class="fht">
+                                    {{ form_row(TicketForm.voiture.ficheTech.puissanceFiscale) }}
+                                </div>
+                                <div class="fht">
+                                    {{ form_row(TicketForm.voiture.ficheTech.volumeResevoir) }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-primary" style="border-radius: 0;">
+                        <div class="panel-heading" style="border-radius: 0;">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" style="border-radius: 0;">
+                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" style="border-radius: 0;">
+                                        Ces champs sont optionnels mais il est toujours mieux de les remplir
+                                    </a>
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseTwo" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                {{ form_rest(TicketForm.voiture.ficheTech) }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {#<div class="">
+                    <div id="sidenav1">
+                        <div class="navbar-header">
+                            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#sideNavbar"> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
+                        </div>
+                        <div class="collapse navbar-collapse" id="sideNavbar">
+                            <div class="panel-group" id="accordion">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title"><a href=""><span class="glyphicon glyphicon-home"></span>Home</a> </h4>
+                                    </div>
+                                </div>
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title"> <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne"><span class="glyphicon glyphicon-book"> </span>Research<span class="caret"></span></a> </h4>
+                                    </div>
+                                    <!-- Note: By adding "in" after "collapse", it starts with that particular panel open by default; remove if you want them all collapsed by default -->
+                                    <div id="collapseOne" class="panel-collapse collapse in">
+                                        <ul class="list-group">
+                                            <li class="navlink2"><a href=""><span class="glyphicon glyphicon-book"></span>Overview</a></li>
+                                            <li><a href="" class="navlink">Link 1</a></li>
+                                            <li><a href="" class="navlink">Link 2</a></li>
+                                            <li><a href="" class="navlink">Link 3</a></li>
+                                            <li><a href="" class="navlink">Link 4</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title"> <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo"><span class="glyphicon glyphicon-cog"> </span>Services<span class="caret"></span></a> </h4>
+                                    </div>
+                                    <div id="collapseTwo" class="panel-collapse collapse">
+                                        <ul class="list-group">
+                                            <li class="navlink2"><a href="" class="navlink"><span class="glyphicon glyphicon-cog"></span>Overview</a></li>
+                                            <li><a href="" class="navlink">Link 1</a></li>
+                                            <li><a href="" class="navlink">Link 2</a></li>
+                                            <li><a href="" class="navlink">Link 3</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title"> <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree"><span class="glyphicon glyphicon-calendar"> </span>Calendar<span class="caret"></span></a> </h4>
+                                    </div>
+                                    <div id="collapseThree" class="panel-collapse collapse">
+                                        <ul class="list-group">
+                                            <li class="navlink2"><a href=""><span class="glyphicon glyphicon-calendar"></span>Overview</a></li>
+                                            <li><a href="" class="navlink">Link 1</a></li>
+                                            <li><a href="" class="navlink">Link 2</a></li>
+                                            <li><a href="" class="navlink">Link 3</a></li>
+                                            <li><a href="" class="navlink">Link 4</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title"> <a data-toggle="collapse" data-parent="#accordion" href="#collapseFour"><span class="glyphicon glyphicon-user"></span> About Us<span class="caret"></span></a></h4>
+                                    </div>
+                                    <div id="collapseFour" class="panel-collapse collapse">
+                                        <ul class="list-group">
+                                            <li><a href="" class="navlink">Link 1</a></li>
+                                            <li><a href="" class="navlink">Link 2</a></li>
+                                            <li><a href="" class="navlink">Link 3</a></li>
+                                            <li><a href="" class="navlink">Link 4</a></li>
+                                            <li><a href="" class="navlink">Link 5</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <!-- This is in case you want to add additional links that will only show once the Nav button is engaged; delete if you don't need -->
+                                <div class="menu-hide">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <h4 class="panel-title"><a href=""><span class="glyphicon glyphicon-new-window"></span>External Link</a> </h4>
+                                        </div>
+                                    </div>
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <h4 class="panel-title"><a href=""><span class="glyphicon glyphicon-new-window"></span>External Link</a> </h4>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- end hidden Menu items -->
+                            </div>
+                        </div>
+                    </div>
+                </div>#}
+
+            </div>
+            <div style="display: none">
+                {{ form_rest(TicketForm) }}
+            </div>
+            <div class="col-md-12" style="">
+                <button type="submit" class="btn btn-primary btn-lg" aria-label="Left Align" style="text-align: center; border-radius: 0;">
+                    <span class="glyphicon glyphicon-check" aria-hidden="true" ></span> Enregistrer
+                </button>
+            </div>
+            {{ form_end(TicketForm) }}
+        </div>
+    </div>
+{% endblock %}
+

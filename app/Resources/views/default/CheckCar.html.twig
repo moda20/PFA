@@ -1,0 +1,115 @@
+{% extends 'home/home.html.twig' %}
+
+{% block title %}
+    {{ car.nomVoiture }}
+{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+{% block body %}
+    <div class="">
+        <div class="row" style="">
+            <div class="col-lg-6" style="">
+                <div class=" {#col-md-6 col-lg-6#} {#col-xs-offset-0#} {#col-sm-offset-0 col-md-offset-3 col-lg-offset-3#} toppad" >
+                    <div class="panel panel-info">
+                        <div class="panel-heading headerColor" style="background-color: #81B9BA;">
+                            <h3 class="panel-title " style="display: inline-block;">{{ "#{car.nomVoiture}" }}</h3>
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="{#col-md-3 col-lg-3#} " align="center"> <img alt="Image de la Voiture" src="{{ Carimg }}" class="img-responsive"> </div>
+                                <div class=" col-md-9 col-lg-9 ">
+                                    <table class="table table-user-information">
+                                        <tbody>
+                                        <tr>
+                                            <td>Nom de la Voiture:</td>
+                                            <td>{{ car.nomVoiture }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Modèle de la voiture:</td>
+                                            <td>{{ car.modeleVoiture }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Disponibilité:</td>
+                                            <td>{{ car.disponibilite ==1 ?'Oui':'Non' }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Date d'ajout:</td>
+                                            <td>{{ car.dateAjout|date("m/d/Y") }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Utilisateur:</td>
+                                            <td><a href="{{ path('user_profile', {'id': car.utilisateur.id}) }}" class="btn btn-default" role="button">{{ car.utilisateur.nom }}</a></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Plus de photo</td>
+                                            <td>
+                                                <div class="row">
+                                                    <div class="col-lg-12" >
+                                                        {% if car.photos == [] %}
+                                                            Il n'ya pas de photos attachées à cette voiture
+                                                        {% else %}
+                                                            {% for img in car.photos %}
+                                                                <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+                                                                    <a class="thumbnail" href="#" data-image-id="" data-toggle="modal" data-title="{{ car.nomVoiture }}" data-caption="" data-image="{{ "#{cursrc}#{img}" }}" data-target="#image-gallery">
+                                                                        <img class="img-responsive" src="{{ "#{cursrc}#{img}" }}" alt="">
+                                                                    </a>
+                                                                </div>
+                                                            {% endfor %}
+                                                        {% endif %}
+                                                    </div>
+                                                    <div class="modal fade" id="image-gallery" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                                        <div class="modal-dialog">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                                                                    <h4 class="modal-title" id="image-gallery-title"></h4>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <img id="image-gallery-image" class="img-responsive" src="">
+                                                                </div>
+                                                                <div class="modal-footer">
+
+                                                                    <div class="col-md-2">
+                                                                        <button type="button" class="btn btn-primary" id="show-previous-image">Previous</button>
+                                                                    </div>
+
+                                                                    <div class="col-md-8 text-justify" id="image-gallery-caption">
+
+                                                                    </div>
+
+                                                                    <div class="col-md-2">
+                                                                        <button type="button" id="show-next-image" class="btn btn-default">Next</button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel-footer">
+                            <a data-original-title="Broadcast Message" data-toggle="tooltip" type="button" class="btn btn-sm btn-primary"><i class="glyphicon glyphicon-envelope"></i></a>
+                            <span class="pull-right">
+                                {% if is_granted('ROLE_OWN', car) %}
+                                    <a href="{{ path("edit_car", {'id': car.id}) }}" data-original-title="Modifier mon compte" data-toggle="tooltip" type="button" class="btn btn-sm btn-warning"><i class="glyphicon glyphicon-edit"></i></a>
+                                    <a href="{{ path("user_car_delete", {'id': car.id}) }}" data-original-title="Effacer mon compte" data-toggle="tooltip" type="button" class="btn btn-sm btn-danger"><i class="glyphicon glyphicon-remove"></i></a>
+                                {% endif %}
+                        </span>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6" style="">
+
+            </div>
+        </div>
+    </div>
+{% endblock %}

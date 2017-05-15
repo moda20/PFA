@@ -1,0 +1,124 @@
+{% extends 'home/home.html.twig' %}
+
+{% block title %}
+{{ Status }}
+{% endblock%}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <h1>Remplir les information necessaire</h1>
+                {{ form_start(UserForm, {'attr': {'novalidate': 'novalidate'}}) }}
+                <div class="container">
+                    <div class="row">
+                        <div class="col col-md-6">
+                            <div class="input-group fh" style="">
+                                <span class="input-group-addon fa fa-user" style="max-height: 34px;"></span>
+                            {{ form_row(UserForm.nom, {
+                                'label' : " "
+                            }) }}
+                            </div>
+                            <div class="input-group fh" style="">
+                                <span class="input-group-addon fa fa-user" style="max-height: 34px;"></span>
+                            {{ form_row(UserForm.prenom, {
+                                'label' : " "
+                            }) }}
+                            </div>
+                            <div class="input-group fh" style="">
+                                <span class="input-group-addon fa fa-envelope-o" style="max-height: 34px;"></span>
+                            {{ form_row(UserForm.mail, {
+                                'label' : " "
+                            }) }}
+                            </div>
+                            <div class="input-group fh" style="">
+                                <span class="input-group-addon fa fa-phone" style="max-height: 34px;"></span>
+                            {{ form_row(UserForm.numTel, {
+                                'label' : " "
+                            }) }}
+                            </div>
+                            <div class="input-group fh" style="">
+                                <span class="input-group-addon fa fa-calendar-o" style="max-height: 34px;"></span>
+                            {{ form_row(UserForm.dateNaissance, {
+                                'label' : " "
+                            }) }}
+                            </div>
+                            <div class="input-group fh" style="">
+                                <span class="input-group-addon fa fa-credit-card" style="max-height: 34px;"></span>
+                            {{ form_row(UserForm.adresse, {
+                                'label' : " "
+                            }) }}
+                            </div>
+                            <div class="input-group fh" style="">
+                                <span class="input-group-addon fa fa-map-marker" style="max-height: 34px;"></span>
+                            {{ form_row(UserForm.codePostal, {
+                                'label' : " "
+                            }) }}
+                            </div>
+                            <div class="input-group fh" style="">
+                                <span class="input-group-addon fa fa-map-marker" style="max-height: 34px;"></span>
+                            {{ form_row(UserForm.ville, {
+                                'label' : " "
+                            }) }}
+                            </div>
+                            <div class="input-group fh" style="">
+                                <span class="input-group-addon fa fa-flag" style="max-height: 34px;"></span>
+                            {{ form_row(UserForm.pays, {
+                                'label' : " "
+                            }) }}
+                            </div>
+                        </div>
+                        <div class="col col-md-6">
+                            <img src="{{ UserImage }}" style="margin: auto;" class="img-responsive">
+                            <div class="input-group fh" style="margin-top: 11px;margin-bottom: 11px;">
+                                <label class="btn btn-full btn-primary btn-file">Choisir une Photo
+                                    {{ form_widget(UserForm.photo, {
+                                        'attr' : {"style" : "display:none;"}, 'label' : " "
+                                    }) }}
+                                </label>
+                            </div>
+                            <div class="input-group fh" style="">
+                                <span class="input-group-addon fa fa-key" style="max-height: 34px;"></span>
+                                {{ form_row(UserForm.password.first, {
+                                    'label' : " ",
+                                    'attr' : {"placeholder" : "Votre Mot de pass"}
+                                }) }}
+                            </div>
+                            <div class="input-group fh" style="">
+                                <span class="input-group-addon fa fa-key" style="max-height: 34px;"></span>
+                            {{ form_row(UserForm.password.second, {
+                                'label' : " ",
+                                'attr' : {"placeholder" : "Confirmer votre Mot de pass"}
+                            }) }}
+                            </div>
+                            <div class="input-group fh" style="">
+                                <span class="input-group-addon fa fa-user-secret" style="max-height: 34px;"></span>
+                            {{ form_row(UserForm.username, {
+                                'label' : " "
+                            }) }}
+                            </div>
+                            <ul class="list-group">
+                                {% for UH in UserHistory %}
+                                    <li class="list-group-item">{{ UH }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Enregistrer</button>
+                {{ form_end(UserForm) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.js"></script>
+    <script>
+        jQuery(document).ready(function () {
+            $('.js-datepicker').datepicker({
+                format: 'yyyy-mm-dd',
+            });
+        });
+    </script>
+{% endblock %}

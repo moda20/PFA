@@ -1,0 +1,61 @@
+{% extends 'home/home.html.twig' %}
+
+
+{% block title %}
+    Le Comparateur
+{% endblock %}
+
+{% block body %}
+    <div class="row" style="padding :0;">
+        <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+            <div class="card">
+{#
+                <div class="card-image">
+                    <img class="img-responsive" src="{{ "#{cursrc}#{ticket.voiture.photo}" }}" style="margin: auto;">
+                    <span class="card-title">{{ ticket.nom }}</span>
+                </div>#}
+                <div class="card-content">
+
+                </div>
+
+                <div class="card-action">
+{#                    {% if is_granted('ROLE_OWN', ) %}
+                        <a href="{{ path("user_ticket_remove", {'id': ticket.id}) }}" >Modifier</a>
+                        <a href="{{ path("user_ticket_edit", {'id': ticket.id}) }}" >Suprimer</a>
+                    {% endif %}#}
+                    <ul class="list-group">
+                        {% for deal in tickets  %}
+                            <li class="list-group-item" style="padding: 0;">
+                                <table class="table ">
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Nom Voiture</th>
+                                        <th>Prix</th>
+                                        <th>Modèle</th>
+                                    </tr>
+                                    <tr style="" class="table-active">
+                                        <td style="">
+                                            <a href="{{ path('user_ticket', {'id': deal.id}) }}">{{ deal.id }}</a>
+                                        </td>
+                                        <td>
+                                            {{ deal.voiture.nomVoiture }}
+                                        </td>
+                                        <td>
+                                            {{ deal.prix }}
+                                        </td>
+                                        <td>
+                                            {{ deal.voiture.modeleVoiture }}
+                                        </td>
+                                    </tr>
+                                </table>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+
+        </div>
+    </div>
+{% endblock %}

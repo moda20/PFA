@@ -1,0 +1,408 @@
+{% extends 'home/home.html.twig' %}
+
+
+{% block title %}
+Annonce : {{ ticket.nom }}
+{% endblock %}
+
+
+{% block body %}
+    <div class="row">
+{#        <div class="col-lg-6">
+            <div class="panel panel-info toppad">
+                <div class="panel-heading headerColor" style="">
+                    <h3 class="panel-title " style="display: inline-block;">Annonce N° {{ ticket.id }} de {{ "#{ticket.utilisateur.nom} #{ticket.utilisateur.prenom}" }}</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class=" col-md-9 col-lg-9 ">
+                            <table class="table table-user-information">
+                                <tbody>
+                                <tr>
+                                    <td>Nom de l'annonce:</td>
+                                    <td>{{ ticket.nom }}</td>
+                                </tr>
+                                <tr>
+                                    <td>La voiture concernée:</td>
+                                    <td><a class="btn btn-sm btn-primary" href="{{ path('check_car', {'id': ticket.voiture.id}) }}">{{ ticket.voiture.nomVoiture }}</a></td>
+                                </tr>
+                                <tr>
+                                    <td>Prix demandé:</td>
+                                    <td>{{ ticket.prix }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Description</td>
+                                    <td>{{ ticket.description }}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-footer">
+                    <a data-original-title="Broadcast Message" data-toggle="tooltip" type="button" class="btn btn-sm btn-primary" href={{ "mailto:" ~  ticket.utilisateur.mail }}><i class="glyphicon glyphicon-envelope"></i></a>
+                    <span class="pull-right">
+                                {% if is_granted('ROLE_OWN', ticket) %}
+                                    <a href="{{ path("user_ticket_edit", {'id': ticket.id}) }}" data-original-title="modifier l'annonce" data-toggle="tooltip" type="button" class="btn btn-sm btn-warning"><i class="glyphicon glyphicon-edit"></i></a>
+                                    <a href="{{ path("user_ticket_remove", {'id': ticket.id}) }}" data-original-title="Effacer l'annonce" data-toggle="tooltip" type="button" class="btn btn-sm btn-danger"><i class="glyphicon glyphicon-remove"></i></a>
+                                {% endif %}
+                        </span>
+                </div>
+
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="panel panel-default toppad">
+                <div class="panel-heading headerColor" style="background-color: #81B9BA;">
+                    <h3 class="panel-title " style="display: inline-block;">Voiture liée a l'annonce</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-3 col-lg-3 " align="center"> <img alt="User Pic" src="{{ "#{cursrc}#{ticket.voiture.photo}" }}" class="img-circle img-responsive"> </div>
+                        <div class=" col-md-9 col-lg-9 ">
+                            <table class="table table-user-information">
+                                <tbody>
+                                <tr>
+                                    <td>Nom:</td>
+                                    <td>{{ ticket.voiture.nomVoiture }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Modèle:</td>
+                                    <td>{{ ticket.voiture.modeleVoiture }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Disponibilité:</td>
+                                    <td>{{ ticket.voiture.disponibilite ==1 ?'Oui':'Non' }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Utilisateur</td>
+                                    <td><a class="btn btn-sm" href="{{ path('user_profile', {'id': ticket.utilisateur.id}) }}"><i class="glyphicon glyphicon-user"></i>{{ ticket.utilisateur.nom }}</a></td>
+                                </tr>
+                                <tr>
+                                    <td>Fiche Technique</td>
+                                    <td>
+                                        {% if ticket.voiture.ficheTech %}
+                                            <a class="btn btn-sm btn-primary" href="{{ path('user_tech_sheet', {'id': ticket.voiture.ficheTech.id}) }}"><i class="glyphicon glyphicon-user"></i>{{ ticket.utilisateur.nom }}</a>
+                                         {% else %}
+                                            Cette Voiture ne possède pas une fiche technique attachée
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-footer">
+                    <a data-original-title="Broadcast Message" data-toggle="tooltip" type="button" class="btn btn-sm btn-primary" href={{ "mailto:" ~  ticket.utilisateur.mail }}><i class="glyphicon glyphicon-envelope"></i></a>
+                    <span class="pull-right">
+                                {% if is_granted('ROLE_OWN', ticket) %}
+                                    <a href="{{ path("edit_car", {'id': ticket.voiture.id}) }}" data-original-title="modifier la voiture" data-toggle="tooltip" type="button" class="btn btn-sm btn-warning"><i class="glyphicon glyphicon-edit"></i></a>
+                                    <a href="{{ path("user_car_delete", {'id': ticket.voiture.id}) }}" data-original-title="Effacer la voiture" data-toggle="tooltip" type="button" class="btn btn-sm btn-danger"><i class="glyphicon glyphicon-remove"></i></a>
+                                {% endif %}
+                        </span>
+                </div>
+
+            </div>
+        </div>#}
+        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+            <div class="card">
+                <div class="card-image">
+                    <img class="img-responsive" src="{{ "#{cursrc}#{ticket.voiture.photo}" }}" style="margin: auto;">
+                    <span class="card-title">{{ ticket.nom }}</span>
+                </div>
+
+                <div class="card-content">
+                    <p><table class="table table-user-information">
+                        <tbody>
+                        <tr>
+                            <td>Nom de La voiture :</td>
+                            <td>{{ ticket.voiture.nomVoiture }}</td>
+                        </tr>
+                        <tr>
+                            <td>Modèle de lavoiture :</td>
+                            <td>{{ ticket.voiture.modeleVoiture }}</td>
+                        </tr>
+                        <tr>
+                            <td>Constructeur :</td>
+                            <td>{{ ticket.voiture.constructeur }}</td>
+                        </tr>
+                        <tr>
+                            <td>Date de debut commerce (Y/M/D) :</td>
+                            <td>{{ ticket.voiture.ficheTech.dateCommerce? ticket.voiture.ficheTech.dateCommerce|date("y/m/d"): 'Date de commerce non spécifée'  }}</td>
+                        </tr>
+                        <tr>
+                            <td>Ville / Pays :</td>
+                            <td>{{ "#{ticket.utilisateur.ville} / #{ticket.utilisateur.pays}" }}</td>
+                        </tr>
+                        <tr>
+                            <td>Prix : </td>
+                            <td>{{ ticket.prix }}</td>
+
+                            <td>Cote G.A : </td>
+                            <td>{{ ticket.voiture.argus }}</td>
+                        </tr>
+                        </tbody>
+                    </table></p>
+                </div>
+
+                <div class="card-action">
+                    {%if is_granted('ROLE_OWN', ticket) %}
+                        <a href="{{ path("user_ticket_remove", {'id': ticket.id}) }}" >Modifier</a>
+                        <a href="{{ path("user_ticket_edit", {'id': ticket.id}) }}" >Suprimer</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+            <div class="panel-group" id="accordion" style="margin-top: 1.8%;">
+                <div class="panel panel-primary" style="border-radius: 0;">
+                    <div class="panel-heading" style="background-image: none; background-color: #3c8dbc; border: 2px red; border-radius: 0;">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" style="border-radius: 0;">
+                                Champs Intéressants
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="collapseOne" class="panel-collapse collapse in">
+                        <div class="panel-body" style="background-color:white;">
+                            <table class="table table-striped">
+                                <tr>
+                                    <td class="fht">
+                                        {{ "Carburant" }}
+                                    </td>
+                                    <td>
+                                        {{ ticket.voiture.ficheTech.carburant !=''?ticket.voiture.ficheTech.carburant : 'Non Spécifiée' }}
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td class="fht">
+                                        {{ "Consommation Urbaine" }}
+                                    </td>
+                                    <td>
+                                        {{ ticket.voiture.ficheTech.consommationUrbaine100Km !=''?ticket.voiture.ficheTech.consommationUrbaine100Km : 'Non Spécifiée' }} / 100 Km
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td class="fht">
+                                        {{ "Longeur" }}
+                                    </td>
+                                    <td>
+                                        {{ ticket.voiture.ficheTech.longueur !=''?ticket.voiture.ficheTech.longueur : 'Non Spécifiée' }}
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td class="fht">
+                                        {{ "Maximum de Révision" }}
+                                    </td>
+                                    <td>
+                                        {{ ticket.voiture.ficheTech.maxRevision != ''? ticket.voiture.ficheTech.maxRevision : 'Non Spécifiée'  }}
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td class="fht">
+                                        {{ "Puissance Fiscale" }}
+                                    </td>
+                                    <td>
+                                        {{ ticket.voiture.ficheTech.puissanceFiscale != ''? ticket.voiture.ficheTech.puissanceFiscale : 'Non Spécifiée' }}
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td class="fht">
+                                        {{ "Volume Réservoir" }}
+                                    </td>
+                                    <td>
+                                        {{ ticket.voiture.ficheTech.volumeResevoir != ''? ticket.voiture.ficheTech.volumeResevoir : 'Non Spécifiée'}}
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-primary" style="border-radius: 0;">
+                    <div class="panel-heading" style="border-radius: 0;">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" style="border-radius: 0;">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" style="border-radius: 0;">
+                                    Plus de Renseignement
+                                </a>
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="collapseTwo" class="panel-collapse collapse">
+                        <div class="panel-body" style="background-color:white;">
+                            <table class="table table-striped">
+
+                                    <tr>
+                                        <td>
+                                            Accéleration
+                                        </td>
+                                        <td>
+                                            {{ ticket.voiture.ficheTech.acceleration != ''? ticket.voiture.ficheTech.acceleration:'Non Spécifiée' }}
+                                        </td>
+                                    </tr>
+
+                                <tr>
+                                    <td>
+                                        Alimentation
+                                    </td>
+                                    <td>
+                                        {{ ticket.voiture.ficheTech.alimentation != ''? ticket.voiture.ficheTech.alimentation:'Non Spécifiée' }}
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        Consomation Mixte
+                                    </td>
+                                    <td>
+                                        {{ ticket.voiture.ficheTech.consommationMixte != ''? ticket.voiture.ficheTech.consommationMixte :'Non Spécifiée' }}
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        Consommation non Urbaine
+                                    </td>
+                                    <td>
+                                        {{ ticket.voiture.ficheTech.consommationNomUrbaine100Km != ''? ticket.voiture.ficheTech.consommationNomUrbaine100Km :'Non Spécifiée'}}  /100Km
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        Le Couple
+                                    </td>
+                                    <td>
+                                        {{ ticket.voiture.ficheTech.couple != ''? ticket.voiture.ficheTech.couple :'Non Spécifiée'}}
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        Date de commerce
+                                    </td>
+                                    <td>
+                                        {{ ticket.voiture.ficheTech.dateCommerce |date("y/m/d") != ''? ticket.voiture.ficheTech.dateCommerce | date("y/m/d") :'Non Spécifiée' }}
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        Date de fin de commerce
+                                    </td>
+                                    <td>
+                                        {{ ticket.voiture.ficheTech.dateFinCommerce |date("y/m/d") != ''? ticket.voiture.ficheTech.dateFinCommerce | date("y/m/d") :'Non Spécifiée'}}
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        Emission CO2
+                                    </td>
+                                    <td>
+                                        {{ ticket.voiture.ficheTech.degagementCO2 != ''? ticket.voiture.ficheTech.degagementCO2 :'Non Spécifiée' }}
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        Garentie
+                                    </td>
+                                    <td>
+                                        {{ ticket.voiture.ficheTech.garantie != ''? ticket.voiture.ficheTech.garantie :'Non Spécifiée' }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                       Longeur avec Retroviseur
+                                    </td>
+                                    <td>
+                                        {{ ticket.voiture.ficheTech.longueurAvecRetroviseurs != ''? ticket.voiture.ficheTech.longueurAvecRetroviseurs :'Non Spécifiée' }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Mode Moteur
+                                    </td>
+                                    <td>
+                                        {{ ticket.voiture.ficheTech.modeMoteur != ''? ticket.voiture.ficheTech.modeMoteur :'Non Spécifiée'}}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Nombre de place
+                                    </td>
+                                    <td>
+                                        {{ ticket.voiture.ficheTech.nombrePlaces != ''? ticket.voiture.ficheTech.nombrePlaces :'Non Spécifiée' }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Nombre de portes
+                                    </td>
+                                    <td>
+                                        {{ ticket.voiture.ficheTech.nombrePortes != ''? ticket.voiture.ficheTech.nombrePortes :'Non Spécifiée' }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Position Moteur
+                                    </td>
+                                    <td>
+                                        {{ ticket.voiture.ficheTech.positionMoteur != ''? ticket.voiture.ficheTech.positionMoteur :'Non Spécifiée'}}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Taille des pneus
+                                    </td>
+                                    <td>
+                                        {{ ticket.voiture.ficheTech.taillePneue != ''? ticket.voiture.ficheTech.taillePneue :'Non Spécifiée'}}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Vitesse maximale
+                                    </td>
+                                    <td>
+                                        {{ ticket.voiture.ficheTech.vitesseMax != ''? ticket.voiture.ficheTech.vitesseMax :'Non Spécifiée'}}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Volume cylindre
+                                    </td>
+                                    <td>
+                                        {{ ticket.voiture.ficheTech.volumeCylindre != ''? ticket.voiture.ficheTech.volumeCylindre :'Non Spécifiée'}}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Poid à vide
+                                    </td>
+                                    <td>
+                                        {{ ticket.voiture.ficheTech.poidVide != ''? ticket.voiture.ficheTech.poidVide :'Non Spécifiée'}}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Volume Min-Max
+                                    </td>
+                                    <td>
+                                        {{ ticket.voiture.ficheTech.volumeMinMax != ''? ticket.voiture.ficheTech.volumeMinMax :'Non Spécifiée'}}
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,88 @@
+{% extends 'home/home.html.twig' %}
+
+{% block title %}
+Ajout Administrateur
+{% endblock %}
+
+
+{% block javascripts %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.js"></script>
+    <script>
+        jQuery(document).ready(function () {
+            $('.js-datepicker').datepicker({
+                format: 'yyyy-mm-dd',
+            });
+        });
+    </script>
+{% endblock %}
+
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <h1>Remplir les information necessaire</h1>
+                {{ form_start(UserForm,{'attr': {'novalidate': 'novalidate'}}) }}
+                <div class="container">
+                    <div class="row">
+                        <div class="col col-md-6">
+                            {{ form_row(UserForm.id, {
+                                'label' : "ID de l'utilisateur"
+                            }) }}
+                            {{ form_row(UserForm.nom, {
+                                'label' : "Nom de l'utilisateur"
+                            }) }}
+                            {{ form_row(UserForm.prenom, {
+                                'label' : "Prenom de l'utilisateur"
+                            }) }}
+                            {{ form_row(UserForm.mail, {
+                                'label' : "E-mail de l'utilisateur"
+                            }) }}
+                            {{ form_row(UserForm.numTel, {
+                                'label' : "Numéro de télephone de l'utilisateur"
+                            }) }}
+                            {{ form_row(UserForm.dateNaissance, {
+                                'label' : "Date de naissance de l'utilisateur"
+                            }) }}
+                            {{ form_row(UserForm.adresse, {
+                                'label' : "Adresse de l'utilisateur"
+                            }) }}
+                            {{ form_row(UserForm.codePostal, {
+                                'label' : "Code Postal de l'utilisateur"
+                            }) }}
+                            {{ form_row(UserForm.ville, {
+                                'label' : "Ville de l'utilisateur"
+                            }) }}
+                            {{ form_row(UserForm.pays, {
+                                'label' : "Pays de l'utilisateur"
+                            }) }}
+                        </div>
+                        <div class="col col-md-6">
+                            <img src="{{ UserImage }}" style="margin: 0 auto;">
+                            {{ form_row(UserForm.ipCourante, {
+                                'label' : "L'IpCourante de l'utilisateur"
+                            }) }}
+                            {{ form_row(UserForm.password, {
+                                'label' : "Le mot de passe de l'utilisateur"
+                            }) }}
+                            {{ form_row(UserForm.username, {
+                                'label' : "L'identifiant de l'utilisateur"
+                            }) }}
+                            {{ form_row(UserForm.historique, {
+                                'label' : "L'historique de l'utilisateur"
+                            }) }}
+                            <ul class="list-group">
+                                {% for UH in UserHistory %}
+                                    <li class="list-group-item">UH</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+                <button type="submit" class="btn btn-primary">Enregistrer</button>
+                {{ form_end(UserForm) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

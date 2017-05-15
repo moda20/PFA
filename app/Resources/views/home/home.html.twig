@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>{% block title %}page d'acceuil{% endblock %}</title>
+
+    {% block stylesheets %}
+        <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/kl_profile_cards.css') }}">
+        <link rel="stylesheet" href="{{ asset('vendor/fontawesome/css/font-awesome.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/tabs.css') }}">
+
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.nicescroll/3.6.8-fix/jquery.nicescroll.min.js"></script>
+    {% endblock %}
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+</head>
+
+<body>
+<div class="search-bar">
+    <form method="GET" action="{{ path('search') }}" class="js-sea-search sea-search" name="SearchForm">
+        <input type="search" name="searchKey" placeholder="Chercher sur le site" autocomplete="on" class="search-input">
+    </form>
+</div>
+<header class="header" style="display: flex;">
+{#    <div class="row">
+       <div class="col-sm-2 col-md-2"><img class="logo-icon" src="{{ asset('images/logo2.png') }}" style="padding-right: 1%; position:relative;"><h1 class="logo">Les Voitures</h1></div>
+        <div class="col-sm-4 col-md-4 col-sm-offset-6 col-md-offset-6"><ul class="navi" style="display: flex;">
+        <li class="search"><a href="#" class="js-header-search-toggle"><i class="fa fa-search"></i></a></li>
+        {% if app.user %}
+            <li> <a href="{{ path("user_profile", {'id': app.user.id}) }}">{{ app.user ? app.user.nom : '' }}</a></li>
+        {% endif %}
+        {% if is_granted('ROLE_USER') %}
+            <li><a href="{{ path('secure_logout') }}">Logout</a></li>
+        {% else %}
+            <li><a href="{{ path('secure_login') }}">Login</a></li>
+        {% endif %}
+    </ul></div>
+    </div>#}
+    <h2 class="titleheader"><b>G</b>arage<b> A</b>uto</h2>
+    <ul class="navi titleheader" style=" display: inline-flex; position: relative; padding: 0.5%;">
+        <li class="search" style="padding: 0.3%;"><a href="#" class="js-header-search-toggle"><i class="fa fa-search"></i></a></li>
+        {% if app.user %}
+            <li style="padding-right: 0.6%; padding-bottom: 1%; color: #fff;" class=""><img src="{{ '/'~img_dir ~'/' ~ app.user.photo }}" class="img-circle" style="width: 30px; height: 30px;"></li>
+            <li style="padding: 0.3%;"> <a href="{{ path('my_profile') }}" style="color: #fff;">{{ app.user ? app.user.nom : '' }}</a></li>
+        {% endif %}
+        {% if is_granted('ROLE_USER') %}
+            <li><a href="{{ path('secure_logout') }}" class="btn btn-primary btn-full " style="color: #fff;">Logout</a></li>
+        {% else %}
+            <li><a href="{{ path('secure_login') }}" class="btn btn-primary btn-full " style="color: #fff;">Login</a></li>
+        {% endif %}
+    </ul>
+</header>
+
+<div class="main-content">
+    {% block main %}{% endblock %}
+    {% for msg in app.session.flashBag.get('success') %}
+        <div class=" alert alert-success" style="margin-bottom: 0;">
+            {{ msg }}
+        </div>
+    {% endfor %}
+    <div class="row" style="padding: 0">
+        {% if app.user %}
+            <div class="col-sm-2 col-md-2 col-lg-2" style="background-color: #333;  min-height: 520px; display: inline-block; padding-right: 0; border:dashed">
+            <ul class="nav nav-sidebar" style=" padding-top: 3%;">
+                {% if app.user %}
+                    <li class="" style="display: inline-flex">
+                        <img src="{{ '/'~img_dir ~'/' ~ app.user.photo }}" class="img-circle" style="width: 50px; height: 50px; padding: 3%;">
+                    <a href="{{ path('my_profile') }}" style="margin: auto; color: whitesmoke;" class="flare">
+                        {{ app.user.nom }}
+                    </a>
+
+                   </li>
+                {% endif %}
+
+                <li>
+                    <div class="input-group darkSidebarInput" >
+                        <input type="text" name="q" class="form-control darkSidebarInput" placeholder="Chercher..." style="background-color:#374850; border: 0;">
+                        <span class="input-group-btn darkSidebarInput">
+                <button type="submit" name="search" id="search-btn" class="btn btn-flat darkSidebarInput"><i class="fa fa-search darkSidebarInput"></i>
+                </button>
+              </span>
+                    </div>
+                </li>
+                <li><a href="#subTicket" data-toggle="collapse" style="color: whitesmoke;">Mes Annonces<span class="badge pull-right">{{app.user.voitures|length }}</span></a></li>
+                <li>
+                    <div class="collapse" id="subTicket">
+                        <ul style="background-color: #333">
+                            <li><a style="background-color: #333 ; border: 0;color: whitesmoke;" href="{{ path('new_ticket') }}" class="list-group-item btn">Nouvelle annonce</a></li>
+                            <li><a style="background-color: #333; border: 0;color: whitesmoke;" href="{{ path('all_user_ticket') }}" class="list-group-item btn">Gérer Mes Annonce</a></li>
+                        </ul>
+                    </div>
+                </li>
+
+            </ul>
+            {% if is_granted('ROLE_ADMIN') %}
+            <ul class="nav nav-sidebar">
+                <li><a href="{{ path('car_list') }}">Toutes les Voitures</a></li>
+                <li><a href="{{ path('users_list') }}">Tous les Utilisateurs</a></li>
+                <li><a href="{{ path('Admin_ticket_list') }}">Toutes les Annonces</a></li>
+                <li><a href="{{ path('admin_params') }}">Plus de Paramètres</a></li>
+            </ul>
+            {% endif %}
+        </div>
+        {% endif %}
+        <div class="{% if app.user  %}col-sm-10 col-md-10{% endif %}"{% if not app.user %} style="padding-right: 0.6%; padding-left: 0.6%;"{% endif %}>
+            {% block body %}{% endblock %}
+        </div>
+        </article>
+    </div>
+
+</div>
+
+<div class="footer">
+    <p class="footer-text">Made with <span class="heart"><3</span> Mansour Med Kadhem & Nabil Khliff</p>
+</div>
+
+{% block javascripts %}
+    <script src="{{ asset('js/main.js') }}"></script>
+    <script>
+        $(".cla").on('click', function (e) {
+            $(e.target).parent().parent().remove();
+        })
+    </script>
+{% endblock %}
+</body>
+</html>

@@ -1,0 +1,55 @@
+{%  extends "home/home.html.twig" %}
+
+{% block title %}
+Toutes les Annonces
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+
+            <div class="col-xs-12">
+                <div class="pull-right" style="margin-bottom: 10px; margin-top: 20px;">
+                   <a href="{{ path("new_ticket") }}" class="btn btn-primary pull-right">Ajouter une Annonce <span class="fa fa-plus-circle"></span></a>
+                </div>
+
+                <h1>Les Annonce</h1>
+
+                <table class="table table-striped">
+                    <tr>
+                        <th>Id Annonce</th>
+                        <th>Nom Annonce</th>
+                        <th>Id Voiture</th>
+                        <th>Nom Voiture</th>
+                        <th>Modèle Voiture</th>
+                        <th>Constructeur</th>
+                        <th>Nom d'utilisateur</th>
+                        <th>Id Utilisateur</th>
+                        <th>Status</th>
+                        <th>Modifier</th>
+                        <th>Supprimer</th>
+                    </tr>
+                    {% for ticket in Tickets %}
+                        <tr>
+                            <td>{{ ticket.id }}</td>
+                            <td>{{ ticket.nom }}</td>
+                            <td>{{ ticket.voiture.nomVoiture }}</td>
+                            <td>{{ ticket.voiture.id }}</td>
+                            <td>{{ ticket.voiture.modeleVoiture }}</td>
+                            <td>{{ ticket.voiture.constructeur }}</td>
+                            <td>{{ ticket.utilisateur.nom }}</td>
+                            <td>{{ ticket.utilisateur.id }}</td>
+                            <td>{% if ticket.status ==0 %} <a href="{{ path('approve', {'id': ticket.id}) }}">{{'Non approuvée'}}</a>{% else %}<a href="{{ path('disapprove', {'id': ticket.id}) }}">{{'Approuvée'}}</a>{% endif %}</td>
+                            <td>
+                                <a href="{{ path("user_ticket_edit", {'id': ticket.id}) }}" class="btn btn-xs btn-success"><span class="fa fa-pencil"></span></a>
+                            </td>
+                            <td>
+                                <a href="{{ path("user_ticket_remove", {'id': ticket.id}) }}" class="btn btn-xs btn-success"><span class="fa fa-trash"></span></a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}

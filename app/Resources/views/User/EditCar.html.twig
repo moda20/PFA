@@ -1,0 +1,57 @@
+{% extends 'home/home.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.css">
+{% endblock %}
+
+
+{%  block javascripts %}
+    {{ parent() }}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.js"></script>
+    <script>
+        jQuery(document).ready(function () {
+            $('.js-datepicker').datepicker({
+                format: 'yyyy-mm-dd',
+                startDate: '-1d'
+            });
+        });
+    </script>
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <h1>Remplir les information necessaire pour la modification</h1>
+                {{ form_start(NewCarForm,{'attr': {'novalidate': 'novalidate'}}) }}
+                {{ form_row(NewCarForm.nomVoiture, {
+                    'label' : "Spécifier un nouveau nom de voiture à afficher"
+                }) }}
+                {{ form_row(NewCarForm.modeleVoiture, {
+                    'label' : "Spécifier un nouveau modèle de la voiture a afficher"
+                }) }}
+                {{ form_row(NewCarForm.dateAjout, {
+                    'label' : "Ajuster la date d'ajout"
+                }) }}
+                {{ form_row(NewCarForm.photos, {
+                    'label' : "Ajouter de nouvelles les images de l'automobile"
+                }) }}
+                {{ form_row(NewCarForm.photo, {
+                    'label' : "Choisir une nouvelle l'image d'avant"
+                }) }}
+
+                <img src="{{ currsrc }}" class="img-responsive">
+                {{ form_row(NewCarForm.ficheTech, {
+                    'label' : "Choisir la nouvelle fiche technique à lier avec l'automobile"
+                }) }}
+                {{ form_row(NewCarForm.Disponibilite , {
+                    'label' : "Cocher si l'automobile est disponible au moment de l'ajout"
+                }) }}
+                <button type="submit" class="btn btn-primary">Enregistrer</button>
+                {{ form_end(NewCarForm) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+

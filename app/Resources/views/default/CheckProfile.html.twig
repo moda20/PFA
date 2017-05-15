@@ -1,0 +1,169 @@
+{% extends 'home/home.html.twig' %}
+
+{% block title %}
+    {{ user.nom }}
+{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    {% endblock %}
+{% block body %}
+    <div class="">
+        <div class="row" style="">
+            <div class="col-lg-6" style="">
+                {#<div class=" #}{#col-md-6 col-lg-6#}{# #}{#col-xs-offset-0#}{# #}{#col-sm-offset-0 col-md-offset-3 col-lg-offset-3#}{# toppad" >
+                    <div class="panel panel-info">
+                        <div class="panel-heading headerColor" style="background-color: #81B9BA;">
+                            <h3 class="panel-title " style="display: inline-block;">{{ "#{user.nom} #{user.prenom}" }}</h3>
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-3 col-lg-3 " align="center"> <img alt="User Pic" src="{{ userProfilePic }}" class="img-circle img-responsive"> </div>
+                                <div class=" col-md-9 col-lg-9 ">
+                                    <table class="table table-user-information">
+                                        <tbody>
+                                        <tr>
+                                            <td>Adresse E-mail:</td>
+                                            <td><a href={{ "mailto:" ~  user.mail }}>{{ user.mail }}</a></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Numéro de Telephone</td>
+                                            <td>{{ user.numTel }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Date de naissance</td>
+                                            <td>{{ user.dateNaissance|date("m/d/Y") }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Code Postal</td>
+                                            <td>{{ user.codePostal }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Ville / Pays</td>
+                                            <td>{{ "#{user.pays} / #{user.ville}" }}</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel-footer">
+                            <a data-original-title="Broadcast Message" data-toggle="tooltip" type="button" class="btn btn-sm btn-primary"><i class="glyphicon glyphicon-envelope"></i></a>
+                            <span class="pull-right">
+                                {% if is_granted('ROLE_OWN', user) %}
+                                    <a href="{{ path("user_edit_User", {'id': user.id}) }}" data-original-title="Modifier mon compte" data-toggle="tooltip" type="button" class="btn btn-sm btn-warning"><i class="glyphicon glyphicon-edit"></i></a>
+                                    <a href="{{ path("user_profile_remove", {'id': user.id}) }}" data-original-title="Effacer mon compte" data-toggle="tooltip" type="button" class="btn btn-sm btn-danger"><i class="glyphicon glyphicon-remove"></i></a>
+                                {% endif %}
+                        </span>
+                        </div>
+
+                    </div>
+                </div>#}
+                <div class="card">
+                    <div class="card-image">
+                        <img class="img-responsive" src="{{ userProfilePic }}" style="margin: auto;">
+                        <span class="card-title">{{ "#{user.nom} #{user.prenom}" }}</span>
+                    </div>
+
+                    <div class="card-content">
+                        <p><table class="table table-user-information">
+                            <tbody>
+                            <tr>
+                                <td>Adresse E-mail:</td>
+                                <td><a href={{ "mailto:" ~  user.mail }}>{{ user.mail }}</a></td>
+                            </tr>
+                            <tr>
+                                <td>Numéro de Telephone</td>
+                                <td>{{ user.numTel }}</td>
+                            </tr>
+                            <tr>
+                                <td>Date de naissance</td>
+                                <td>{{ user.dateNaissance|date("m/d/Y") }}</td>
+                            </tr>
+                            <tr>
+                                <td>Code Postal</td>
+                                <td>{{ user.codePostal }}</td>
+                            </tr>
+                            <tr>
+                                <td>Ville / Pays</td>
+                                <td>{{ "#{user.pays} / #{user.ville}" }}</td>
+                            </tr>
+                            </tbody>
+                        </table></p>
+                    </div>
+
+                    <div class="card-action">
+                        {%if is_granted('ROLE_OWN', user) %}
+                        <a href="{{ path("user_edit_User", {'id': user.id}) }}" >Modifier</a>
+                        <a href="{{ path("user_profile_remove", {'id': user.id}) }}" >Suprimer</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 " style="">
+                <div class="" style="height: 600px; overflow-y: scroll;">
+                    {% for car in userCars %}
+{#                        <div class="col-sm-6 col-md-6 col-lg-6">
+                            <div class="thumbnail toppad" >
+                                <img src='{{ "#{imgsource}#{car.voiture.getphoto}" }}' >
+                                <div class="caption">
+                                    <h3>{{ car.voiture.nomVoiture }}</h3>
+                                    <p>Modèle : {{ car.voiture.modeleVoiture }}</p>
+                                    <p>Prix : {{ car.prix }}</p>
+                                    <p>Auteur : {{ car.utilisateur.nom }}</p>
+                                    <p><a href="{{ path('user_ticket', {'id': car.id}) }}" class="btn btn-primary" role="button">Voir Annonce</a> <a href="{{ path('check_car', {'id': car.voiture.id}) }}" class="btn btn-default" role="button">Voir Voiture</a></p>
+                                </div>
+                            </div>
+                        </div>#}
+                        <div class="card">
+                            <div class="card-image">
+                                <img class="img-responsive" src="{{ "#{imgsource}#{car.voiture.getphoto}" }}">
+                                <span class="card-title">{{ car.nom }}</span>
+                            </div>
+
+                            <div class="card-content">
+                                    <table class="table table-user-information">
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    Modèle :
+                                                </td>
+                                                <td>
+                                                    {{ car.voiture.modeleVoiture }}
+                                                </td>
+                                                <td>
+
+                                                </td>
+                                                <td>
+                                                    <a class="btn btn-primary" href="{{ path('user_ticket', {'id': car.id}) }}">{{ car.voiture.nomVoiture }}</a>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    Prix :
+                                                </td>
+                                                <td>
+                                                    {{ car.prix }}
+                                                </td>
+                                                <td>
+                                                    Auteur :
+                                                </td>
+                                                <td>
+                                                    <a class="btn btn-primary" href="{{ path('user_profile', {'id': car.utilisateur.id}) }}">{{ car.utilisateur.nom }}</a>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+
+                            <div class="card-action">
+                                {%if is_granted('ROLE_OWN', car) %}
+                                    <a href="{{ path("user_ticket_edit", {'id': car.id}) }}" >Modifier</a>
+                                    <a href="{{ path("user_ticket_remove", {'id': car.id}) }}" >Suprimer</a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+    </div>
+{% endblock %}

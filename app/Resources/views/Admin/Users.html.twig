@@ -1,0 +1,129 @@
+{%  extends "home/home.html.twig" %}
+
+{% block title %}
+Utilisateur
+{% endblock %}
+
+{% block body %}
+    <div class="tabbable-panel">
+        <div class="tabbable-line">
+            <ul class="nav nav-tabs ">
+                <li class="active">
+                    <a href="#tab_default_1" data-toggle="tab">
+                        <i class="fa fa-users"></i> Utilisateurs </a>
+                </li>
+                <li>
+                    <a href="#tab_default_2" data-toggle="tab">
+                        <i class="fa fa-user-secret"></i> Roles </a>
+                </li>
+            </ul>
+            <div class="tab-content">
+                <div class="pull-right" style="margin-bottom: 10px; margin-top: 20px;">
+                    <a href="{{ path("new_user") }}" class="btn btn-primary pull-right">Ajouter un utilisateur <span class="fa fa-plus-circle"></span></a>
+                </div>
+                <div class="tab-pane active" id="tab_default_1">
+                    <h1>
+                        Les utilisateurs enregistrées
+                    </h1>
+
+                    <table class="table table-striped">
+                        <tr>
+                            <th>ID</th>
+                            <th>Nom</th>
+                            <th>Prénom</th>
+                            <th>Numéro Tel</th>
+                            <th>E-mail</th>
+                            <th>Modifier</th>
+                            <th>Supprimer</th>
+                        </tr>
+                        {% for user in Users %}
+                            <tr>
+                                <td>{{ user.id }}</td>
+                                <td>{{ user.nom }}</td>
+                                <td>{{ user.prenom }}</td>
+                                <td>{{ user.numTel }}</td>
+                                <td>{{ user.mail }}</td>
+                                <td>
+                                    <a href="{{ path("edit_user", {'id': user.id}) }}" class="btn btn-xs btn-success"><span class="fa fa-pencil"></span></a>
+                                </td>
+                                <td>
+                                    <a href="{{ path("delete_user", {'id': user.id}) }}" class="btn btn-xs btn-success"><span class="fa fa-trash"></span></a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+                <div class="tab-pane" id="tab_default_2">
+                    <h1>
+                        Les Roles des utilisateurs enregistrées
+                    </h1>
+                    <div class="container">
+                        <table class="table table-striped">
+                            <tr>
+                                <th>ID</th>
+                                <th>Nom</th>
+                                <th>Liste des roles</th>
+                                <th>Supprimer</th>
+                            </tr>
+                            {% for user in Users %}
+                                <tr>
+                                    <td>{{ user.id }}</td>
+                                    <td>{{ user.nom }}</td>
+                                    <td><div class="list-group">
+                                            {% for r in user.roles %}
+                                            <a href="#" class="list-group-item active">
+                                                <h4 class="list-group-item-heading">{{ r=="ROLE_USER"? "Role Utilisateur":r=="ROLE_ADMIN"? "Role Administrateur" }}</h4>
+                                            </a>
+                                            {% endfor %}
+                                        </div></td>
+                                    <td>
+                                        <a href="{{ path("delete_user", {'id': user.id}) }}" class="btn btn-xs btn-success"><span class="fa fa-trash"></span></a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {#<div class="container">
+        <div class="row">
+
+            <div class="col-xs-12">
+                <div class="pull-right" style="margin-bottom: 10px; margin-top: 20px;">
+                   <a href="{{ path("new_user") }}" class="btn btn-primary pull-right">Ajouter un utilisateur <span class="fa fa-plus-circle"></span></a>
+                </div>
+
+                <h1>Utilisateur</h1>
+
+                <table class="table table-striped">
+                    <tr>
+                        <th>ID</th>
+                        <th>Nom</th>
+                        <th>Prénom</th>
+                        <th>Numéro Tel</th>
+                        <th>E-mail</th>
+                        <th>Modifier</th>
+                        <th>Supprimer</th>
+                    </tr>
+                    {% for user in Users %}
+                        <tr>
+                            <td>{{ user.id }}</td>
+                            <td>{{ user.nom }}</td>
+                            <td>{{ user.prenom }}</td>
+                            <td>{{ user.numTel }}</td>
+                            <td>{{ user.mail }}</td>
+                            <td>
+                                <a href="{{ path("edit_user", {'id': user.id}) }}" class="btn btn-xs btn-success"><span class="fa fa-pencil"></span></a>
+                            </td>
+                            <td>
+                                <a href="{{ path("delete_user", {'id': user.id}) }}" class="btn btn-xs btn-success"><span class="fa fa-trash"></span></a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </div>#}
+{% endblock %}

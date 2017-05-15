@@ -1,0 +1,118 @@
+{% extends "home/home.html.twig" %}
+
+{% block title %}
+    Mes Annonces
+{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="tabbable-panel">
+        <div class="tabbable-line">
+            <ul class="nav nav-tabs ">
+                <li class="active">
+                    <a href="#tab_default_1" data-toggle="tab">
+                        <i class="fa fa-bars"></i> </a>
+                </li>
+                <li>
+                    <a href="#tab_default_2" data-toggle="tab">
+                        <i class="fa fa-th"></i>  </a>
+                </li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane active" id="tab_default_1">
+                    <h1>
+                        Mes Annonces
+                    </h1>
+
+                    <table class="table table-striped">
+                        <tr>
+                            <th>Nom de Ticket</th>
+                            <th>Nom de Voiture</th>
+                            <th>Modèle</th>
+                            <th>Constructeur</th>
+                            <th>Prix</th>
+                            <th>Status</th>
+                            <th>Modifier</th>
+                            <th>Supprimer</th>
+                        </tr>
+                        {% for ticket in tickets %}
+                            <tr>
+                                <td>{{ ticket.nom }}</td>
+                                <td>{{ ticket.voiture.nomVoiture }}</td>
+                                <td>{{ ticket.voiture.modeleVoiture }}</td>
+                                <td>{#{{ ticket.voiture.constructeur? ticket.voiture.constructeur : ""  }}#}</td>
+                                <td>{{ ticket.prix }}</td>
+                                <td>{{ ticket.status==0? 'Non approuvée' : 'Approuvée' }}</td>
+                                <td>
+                                    <a href="{{ path("user_ticket_edit", {'id': ticket.id}) }}" class="btn btn-xs btn-success"><span class="fa fa-pencil"></span></a>
+                                </td>
+                                <td>
+                                    <a href="{{ path("user_ticket_remove", {'id': ticket.id}) }}" class="btn btn-xs btn-success"><span class="fa fa-trash"></span></a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+                <div class="tab-pane" id="tab_default_2">
+                    <h1>
+                        Mes Annonces
+                    </h1>
+
+                        <div class="row">
+                            {% for ticket in tickets %}
+                                <div class="col-md-3 col-sm-3 col-lg-3">
+                                    <div class="card">
+                                    <div class="card-image">
+                                        <img class="img-responsive" src="{{ "#{cursrc}#{ticket.voiture.getphoto}" }}" style="position: initial;">
+                                        <span class="card-title">{{ ticket.nom }}</span>
+                                    </div>
+
+                                    <div class="card-content">
+                                        <table class="table table-user-information">
+                                            <tbody>
+                                            <tr>
+                                                <td>
+                                                    {{ ticket.voiture.nomVoiture }}
+                                                </td>
+                                                <td>
+                                                    {{ ticket.voiture.modeleVoiture }}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    {{ ticket.prix }}
+                                                </td>
+                                                <td>
+                                                    {#{{ ticket.voiture. }}#}
+                                                    CONSTRUCTEUR
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                {% if ticket.status ==0 %}
+                                                    <div class="alert alert-danger" role="alert" style="font-size: 0.9em;padding: 0.7%;">
+                                                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                                        <span class="sr-only">Attention :</span>
+                                                        Cette Annonce n'est pas approuvée par un administrateur
+                                                    </div>
+                                                {% endif %}
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="card-action">
+                                        {%if is_granted('ROLE_OWN', ticket) %}
+                                            <a href="{{ path("user_ticket_edit", {'id': ticket.id}) }}" style="font-size: 0.9em" >Modifier</a>
+                                            <a href="{{ path("user_ticket_remove", {'id': ticket.id}) }}" style="font-size: 0.9em" >Suprimer</a>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

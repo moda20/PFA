@@ -1,0 +1,47 @@
+{% extends 'home/home.html.twig' %}
+
+{% block title %}
+    Les Voitures
+{% endblock%}
+
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+
+            <div class="col-xs-12">
+                <div class="pull-right" style="margin-bottom: 10px; margin-top: 20px;">
+                    <a href="{{ path("new_car") }}" class="btn btn-primary pull-right">Ajouter Une Voiture <span class="fa fa-plus-circle"></span></a>
+                </div>
+
+                <h1>Voitures</h1>
+
+                <table class="table table-striped">
+                    <tr>
+                        <th>ID</th>
+                        <th>Nom</th>
+                        <th>modèle</th>
+                        <th>Utilisateur</th>
+                        <th>Modifier</th>
+                        <th>Supprimer</th>
+                    </tr>
+                    {% for Car in Cars %}
+                        <tr>
+                            <td>{{ Car.id }}</td>
+                            <td>{{ Car.nomVoiture }}</td>
+                            <td>{{ Car.modeleVoiture }}</td>
+                            <td>{{ Car.utilisateur }}</td>
+                            <td>
+                                <a href="{{ path("edit_car", {'id': Car.id}) }}" class="btn btn-xs btn-success"><span class="fa fa-pencil"></span></a>
+                            </td>
+                            <td>
+                                <a href="{{ path("delete_car", {'id': Car.id}) }}" class="btn btn-xs btn-success"><span class="fa fa-trash"></span></a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
